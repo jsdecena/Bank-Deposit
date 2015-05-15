@@ -1,0 +1,10 @@
+Hi {name},
+
+Your order #{reference} is awaiting payment via {method}. Please note that you can pay through any of our bank accounts listed below.
+
+{banks} 
+
+You can upload your transaction record by clicking here 
+Or paste this on your browser {link}
+
+Thank you for choosing {shopName}, the better way to send!

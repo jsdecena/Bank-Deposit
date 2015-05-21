@@ -40,6 +40,7 @@ class Bankdeposit extends PaymentModule
 		return parent::install() &&
 			Configuration::updateValue('BANKDEPOSIT', 'BANKDEPOSIT MODULE') &&
 			Configuration::updateValue('BCC', 'help@google.com') &&
+			Configuration::updateValue('BANKLOGO_URL', 'http://bit.ly/1FE558R') &&
 			Configuration::updateValue('PS_OS_BANK_DEPOSIT', $this->create_order_state('Bank Deposit', 'bankdeposit')) &&
 			$this->registerHook('payment') &&
 			Db::getInstance()->Execute('
@@ -53,6 +54,7 @@ class Bankdeposit extends PaymentModule
 					`bank_branch` 		varchar(255) DEFAULT NULL,
 					`swift_code`		varchar(255) DEFAULT NULL,
 					`logo`				varchar(255) DEFAULT NULL,
+					`active`			int(10) DEFAULT 0,
 					`date_add` 			timestamp DEFAULT "0000-00-00",
 					`date_upd` 			timestamp DEFAULT "0000-00-00",
 					PRIMARY KEY (`id`)
@@ -65,6 +67,7 @@ class Bankdeposit extends PaymentModule
 		return parent::uninstall() && 
 			Configuration::deleteByName('BANKDEPOSIT') &&
 			Configuration::deleteByName('BCC') &&
+			Configuration::deleteByName('BANKLOGO_URL') &&
 			$this->deleteOrderStatus(Configuration::get('PS_OS_BANK_DEPOSIT')) &&
 			Configuration::deleteByName('PS_OS_BANK_DEPOSIT') &&
 			$this->unregisterHook('payment') &&
@@ -145,12 +148,20 @@ class Bankdeposit extends PaymentModule
 				break;				
 			default:
 				$this->context->smarty->assign(array(
-					'records'		=> $this->actionGetAllBankRecords()
+					'records'		=> $this->actionGetAllBankRecords(),
+					'settings'		=> $this->updateSettings(),
+					'logo'			=> Configuration::get('BANKLOGO_URL')
 				));
 
 				return $this->display(__FILE__, 'views/templates/actions/view.tpl');
 				break;
 		}
+	}
+
+	public function updateSettings()
+	{
+		if (Tools::isSubmit('updateSettings'))
+			Configuration::updateValue('BANKLOGO_URL', Tools::getValue('payment_logo'));
 	}
 
 	public function actionGetAllBankRecords()
@@ -217,7 +228,8 @@ class Bankdeposit extends PaymentModule
 	public function hookPayment()
 	{
 		$this->context->smarty->assign(array(
-			'action'		=> $this->context->link->getModuleLink($this->name, 'payment')
+			'action'		=> $this->context->link->getModuleLink($this->name, 'payment'),
+			'logo'			=> Configuration::get('BANKLOGO_URL')
 		));
 
 		return $this->display(__FILE__, 'payment.tpl');

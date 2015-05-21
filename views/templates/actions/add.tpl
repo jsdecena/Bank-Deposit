@@ -52,6 +52,15 @@
 					<input type="text" class="form-control" value="" name="logo" placeholder="Logo Name" />
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="active">Enable?</label>
+				<div class="form-controls">
+					<select name="active" id="active">
+						<option value="0" selected="selected">No</option>
+						<option value="1">Yes</option>
+					</select>
+				</div>
+			</div>			
 			<button type="submit" name="actionAddBank" class="btn btn-primary">Save Bank</button>
 		</form>		
 	</div>

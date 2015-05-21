@@ -3,9 +3,7 @@
 		<div class="container">
 			<p class="payment_module wallet">				
 				<a href="{$action}" class="col-md-12">
-					<span class="img-wrap">
-						<img class="img-responsive" src="{$base_dir_ssl|escape:'htmlall':'UTF-8'}modules/bankdeposit/assets/img/banks.png" alt="wallet" height="106" width="600" />
-					</span>
+					{if isset($logo) && $logo}<img class="img-responsive" src="{$logo}" alt="wallet" height="" width="" />{/if}
 					<span>Pay via Bank Deposit</span>
 					<span class="clearfix"></span>
 				</a>

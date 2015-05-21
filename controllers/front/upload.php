@@ -41,13 +41,7 @@ class BankdepositUploadModuleFrontController extends ModuleFrontController
 				
 				}else{
 					
-					//Preferred
-					//$uploadLocationDir = _PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name. '/assets/uploads/';
-
-					//2nd option
-					//$uploadLocationDir = _PS_ROOT_DIR_ . 'upload/';
-
-					$uploadLocationDir = _PS_ROOT_DIR_ . '/img/banners/';
+					$uploadLocationDir = _PS_ROOT_DIR_ . _MODULE_DIR_ . $this->module->name. '/assets/uploads/';
 
 					if (!is_dir($uploadLocationDir)) {
 						$error = "Directory is not existing or not a directory at all";
@@ -56,7 +50,7 @@ class BankdepositUploadModuleFrontController extends ModuleFrontController
 					//RENAME FILE
 					$fileName 	= uniqid() . '.' . $fileData['extension'];
 					$uploadfile = $uploadLocationDir . basename($fileName);
-					$absoluteFileURL = _PS_BASE_URL_.__PS_BASE_URI__.'img/banners/'.basename($fileName);
+					$absoluteFileURL = _PS_BASE_URL_.__PS_BASE_URI__.'modules/'.$this->name.'/assets/uploads/'.basename($fileName);
 
 					$file_attachment = null;
 					if (!empty($_FILES['deposit']['name']))

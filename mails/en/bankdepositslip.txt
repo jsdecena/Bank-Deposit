@@ -1,3 +1,3 @@
 Bank Deposit Slip
 
-A customer has uploaded a deposit slip. Check the order and see the slip in the message box.
+{name} with an Order ID #{id_order} has uploaded a deposit slip. Click here: {link} or Download the attached deposit slip.

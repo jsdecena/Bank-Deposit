@@ -57,15 +57,19 @@ class BankdepositValidationModuleFrontController extends ModuleFrontController
 
 		$this->_html .= '</ul>';
 
+
+		$reference 			= explode("#", Order::getUniqReferenceOf($this->module->currentOrder));
+		$order_reference 	= $reference[0];
+
 		$orderDetails = array(
-			'id_order' 		=> $this->module->currentOrder,
+			'reference' 	=> $order_reference,
 			'secure_key'	=> $customer->secure_key
 		);
 
 		$customerName = $customer->firstname .' '. $customer->lastname;
 
 		$mailVars = array(
-				'{reference}' 	=> Order::getUniqReferenceOf($this->module->currentOrder),
+				'{reference}' 	=> $order_reference,
 				'{method}'		=> $this->module->displayName,
 				'{shopName}'	=> Configuration::get('PS_SHOP_NAME'),
 				'{name}'		=> $customerName,
@@ -76,12 +80,13 @@ class BankdepositValidationModuleFrontController extends ModuleFrontController
 		//SEND EMAIL
 		Mail::Send($this->context->language->id, 'bankdeposit', 'Payment via Bank Deposit', $mailVars, $customer->email,
 		$customerName, Configuration::get('PS_SHOP_EMAIL'), Configuration::get('PS_SHOP_NAME'), null, null,
-		_PS_MAIL_DIR_, false, $this->context->shop->id, Configuration::get('BCC'));
+		_PS_MAIL_DIR_, false, $this->context->shop->id, Configuration::get('SENDAHBCC'));
 		
 		$params = array(
 				'id_cart' 	=> $cart->id,
 				'id_module' => $this->module->id,
 				'id_order'	=> $this->module->currentOrder,
+				'reference' => $order_reference,
 				'key'		=> $customer->secure_key
 			);
 

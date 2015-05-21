@@ -39,7 +39,7 @@ class Bankdeposit extends PaymentModule
 	{
 		return parent::install() &&
 			Configuration::updateValue('BANKDEPOSIT', 'BANKDEPOSIT MODULE') &&
-			Configuration::updateValue('BCC', 'help@sendah.com') &&
+			Configuration::updateValue('BCC', 'help@google.com') &&
 			Configuration::updateValue('PS_OS_BANK_DEPOSIT', $this->create_order_state('Bank Deposit', 'bankdeposit')) &&
 			$this->registerHook('payment') &&
 			Db::getInstance()->Execute('
